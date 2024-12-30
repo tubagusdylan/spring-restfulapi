@@ -1,0 +1,1198 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Contact Api",
+    "version": "1.0",
+    "description": "API SPEC for Contact Management",
+    "contact": {
+      "name": "Tubagus Dylan Rachmat",
+      "email": "work.tubagusdylan@gmail.com"
+    },
+    "license": {
+      "name": "MAVEN"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Server contact management API",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "description": "Development Server"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/api/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Register new user",
+        "description": "Create new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyUser"
+              },
+              "examples": {
+                "udin": {
+                  "value": {
+                    "username": "udin",
+                    "password": "udinpassword",
+                    "name": "Udin luarbiasa"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success register user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success register user",
+                    "value": {
+                      "code": 201,
+                      "message": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "failed": {
+                    "description": "Input Blank",
+                    "value": {
+                      "code": 400,
+                      "message": "Username must not blank"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{userId}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user detail",
+        "description": "Get user detail with user id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          },
+          {
+            "$ref": "#/components/parameters/UserId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success get detail user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "udin": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK",
+                      "data": {
+                        "username": "udin",
+                        "name": "Udin luarbiasa"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "udin": {
+                    "value": {
+                      "code": 401,
+                      "message": "User Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Update user",
+        "description": "Update user detail with user id, can partial update",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyUser"
+              },
+              "examples": {
+                "updateName": {
+                  "value": {
+                    "name": "udin mantapjiwa"
+                  }
+                },
+                "updatePassword": {
+                  "value": {
+                    "password": "udinpasswordbaru"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          },
+          {
+            "$ref": "#/components/parameters/UserId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success update user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "udin": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK",
+                      "data": {
+                        "username": "udin",
+                        "name": "Udin mantapjiwa"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "udin": {
+                    "value": {
+                      "code": 401,
+                      "message": "User Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login User",
+        "description": "User login with username and password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyUser"
+              },
+              "examples": {
+                "udin": {
+                  "value": {
+                    "username": "udin",
+                    "password": "udinpassword"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User login success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK",
+                      "data": {
+                        "token": "initoken",
+                        "expiredAt": 3000
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "failed": {
+                    "description": "Input Wrong",
+                    "value": {
+                      "code": 400,
+                      "message": "Username or password is wrong"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "delete": {
+        "tags": ["Auth"],
+        "summary": "Logout user",
+        "description": "Logout user from application",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success logout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contacts": {
+      "get": {
+        "tags": ["Contact"],
+        "summary": "Get search contact",
+        "description": "Get list contact with search param",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          },
+          {
+            "name": "name",
+            "description": "Search contact firstName or lastName",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "phone",
+            "description": "Search contact phone",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "email",
+            "description": "Search contact email",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "page",
+            "description": "Page for pagination",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "description": "Size per page",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePaging"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "id": "contact-laksjdlkasjd",
+                          "firstName": "Udin",
+                          "lastName": "Surudin",
+                          "email": "udin@email.com",
+                          "phone": "08969087878"
+                        }
+                      ],
+                      "paging": {
+                        "currentPage": 1,
+                        "totalPage": 10,
+                        "perPage": 10,
+                        "totalData": 100
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "failed": {
+                    "value": {
+                      "code": 404,
+                      "message": "Contact not found, ..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Contact"],
+        "summary": "Create new contact",
+        "description": "Create new contact",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyContact"
+              },
+              "examples": {
+                "udin": {
+                  "value": {
+                    "firstName": "Udin",
+                    "lastName": "Surudin",
+                    "email": "udin@email.com",
+                    "phone": "08969087878"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 201,
+                      "message": "OK",
+                      "data": {
+                        "id": "contact-laksjdlkasjd",
+                        "firstName": "Udin",
+                        "lastName": "Surudin",
+                        "email": "udin@email.com",
+                        "phone": "08969087878"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "failed": {
+                    "value": {
+                      "code": 400,
+                      "message": "Email format invalid, ..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contacts/{contactId}": {
+      "get": {
+        "tags": ["Contact"],
+        "summary": "Get contact",
+        "description": "Get contact",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          },
+          {
+            "$ref": "#/components/parameters/ContactId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK",
+                      "data": {
+                        "firstName": "ucup",
+                        "lastName": "surucup",
+                        "email": "ucup@email.com",
+                        "phone": "0896121212"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "failed": {
+                    "value": {
+                      "code": 404,
+                      "message": "Contact is not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Contact"],
+        "summary": "Update contact",
+        "description": "Update contact",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          },
+          {
+            "$ref": "#/components/parameters/ContactId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyContact"
+              },
+              "examples": {
+                "udin": {
+                  "value": {
+                    "firstName": "ucup",
+                    "lastName": "surucup",
+                    "email": "ucup@email.com",
+                    "phone": "0896121212"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK",
+                      "data": {
+                        "firstName": "ucup",
+                        "lastName": "surucup",
+                        "email": "ucup@email.com",
+                        "phone": "0896121212"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "failed": {
+                    "value": {
+                      "code": 400,
+                      "message": "Email format invalid, ..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Contact"],
+        "summary": "Delete contact",
+        "description": "Delete contact",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          },
+          {
+            "$ref": "#/components/parameters/ContactId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "failed": {
+                    "value": {
+                      "code": 404,
+                      "message": "Contact is not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contacts/{contactId}/addresses": {
+      "post": {
+        "tags": ["Address"],
+        "summary": "Create new address",
+        "description": "Create new address for contact",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          },
+          {
+            "$ref": "#/components/parameters/ContactId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyAddress"
+              },
+              "examples": {
+                "test": {
+                  "value": {
+                    "street": "jalan",
+                    "city": "kota",
+                    "province": "provinsi",
+                    "country": "negara",
+                    "postalCode": "10101"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK",
+                      "data": {
+                        "id": "address-alskdjalksjd",
+                        "street": "jalan",
+                        "city": "kota",
+                        "province": "provinsi",
+                        "country": "negara",
+                        "postalCode": "10101"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "failed": {
+                    "description": "Input Wrong",
+                    "value": {
+                      "code": 400,
+                      "message": "Input wrong, ..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Address"],
+        "summary": "Get list address",
+        "description": "Get list address for contact",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "id": "address-alskdjalksjd",
+                          "street": "jalan",
+                          "city": "kota",
+                          "province": "provinsi",
+                          "country": "negara",
+                          "postalCode": "10101"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "failed": {
+                    "value": {
+                      "code": 404,
+                      "message": "Contact is not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contacts/{contactId}/addresses/{addressId}": {
+      "get": {
+        "tags": ["Address"],
+        "summary": "Get detail address",
+        "description": "Get detail address for contact",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          },
+          {
+            "$ref": "#/components/parameters/ContactId"
+          },
+          {
+            "$ref": "#/components/parameters/AddressId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK",
+                      "data": {
+                        "id": "address-alskdjalksjd",
+                        "street": "jalan",
+                        "city": "kota",
+                        "province": "provinsi",
+                        "country": "negara",
+                        "postalCode": "10101"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "failed": {
+                    "description": "Not found",
+                    "value": {
+                      "code": 404,
+                      "message": "Address not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Address"],
+        "summary": "Update address",
+        "description": "Update address for contact",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          },
+          {
+            "$ref": "#/components/parameters/ContactId"
+          },
+          {
+            "$ref": "#/components/parameters/AddressId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyAddress"
+              },
+              "examples": {
+                "test": {
+                  "value": {
+                    "street": "jalan",
+                    "city": "kota",
+                    "province": "provinsi",
+                    "country": "negara",
+                    "postalCode": "10101"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK",
+                      "data": {
+                        "id": "address-alskdjalksjd",
+                        "street": "jalan",
+                        "city": "kota",
+                        "province": "provinsi",
+                        "country": "negara",
+                        "postalCode": "10101"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "failed": {
+                    "description": "Not found",
+                    "value": {
+                      "code": 404,
+                      "message": "Address not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Address"],
+        "summary": "Delete address",
+        "description": "Delete address for contact",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeaderToken"
+          },
+          {
+            "$ref": "#/components/parameters/ContactId"
+          },
+          {
+            "$ref": "#/components/parameters/AddressId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 200,
+                      "message": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 404,
+                      "message": "Address not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "HeaderToken": {
+        "name": "X-API-TOKEN",
+        "description": "Token for authorization",
+        "required": true,
+        "in": "header",
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "token": {
+            "description": "Sample token",
+            "value": "asldaoichnalksjfoiqwoiehqwelkj"
+          }
+        }
+      },
+      "UserId": {
+        "name": "userId",
+        "description": "User id for get and update data",
+        "required": true,
+        "in": "path",
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "user": {
+            "description": "Sample user id",
+            "value": "user-asldkjasld"
+          }
+        }
+      },
+      "ContactId": {
+        "name": "contactId",
+        "description": "Contact id for get and update data",
+        "required": true,
+        "in": "path",
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "user": {
+            "description": "Sample contact id",
+            "value": "contact-asldkjasld"
+          }
+        }
+      },
+      "AddressId": {
+        "name": "addressId",
+        "description": "Address id for get and update data",
+        "required": true,
+        "in": "path",
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "user": {
+            "description": "Sample address id",
+            "value": "address-asldkjasld"
+          }
+        }
+      }
+    },
+    "schemas": {
+      "BodyUser": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "BodyContact": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        }
+      },
+      "BodyAddress": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          }
+        }
+      },
+      "Response": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        }
+      },
+      "ResponsePaging": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array"
+          },
+          "paging": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

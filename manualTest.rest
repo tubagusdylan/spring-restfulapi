@@ -1,0 +1,125 @@
+### register user
+POST http://localhost:8080/api/users
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username": "tubagus2",
+    "password": "rahasia2",
+    "name": "Tubagus Dylan 2"
+}
+
+### Login
+POST http://localhost:8080/api/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username": "tubagus",
+    "password": "rahasia2"
+}
+
+### get user
+GET http://localhost:8080/api/users/current
+Accept: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
+
+### update user
+PATCH http://localhost:8080/api/users/current
+Accept: application/json
+Content-Type: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
+
+{
+    "name": "Tubagus Dylan Rachmat",
+    "password": "rahasia2"
+}
+
+### logout user
+DELETE http://localhost:8080/api/auth/logout
+Accept: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
+
+### create contact
+POST http://localhost:8080/api/contacts
+Accept: application/json
+Content-Type: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
+
+{
+    "firstName": "Budi2",
+    "lastName": "Raharjo2",
+    "email": "budi2@email.com",
+    "phone": "02340723042"
+}
+
+### get contact
+GET http://localhost:8080/api/contacts/62da6e2c-3454-4390-8b00-916295805765
+Accept: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
+
+### list contact
+GET http://localhost:8080/api/contacts?page=0&limit=10
+Accept: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
+
+### update contact
+PUT http://localhost:8080/api/contacts/62da6e2c-3454-4390-8b00-916295805765
+Accept: application/json
+Content-Type: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
+
+{
+    "firstName": "Budi Baru",
+    "lastName": "Raharjo Baru",
+    "email": "budibaru@email.com",
+    "phone": "11111111"
+}
+
+### delete contact
+DELETE http://localhost:8080/api/contacts/62da6e2c-3454-4390-8b00-916295805765
+Accept: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
+
+### create address
+POST http://localhost:8080/api/contacts/4217cb70-eb41-40ba-8731-cc6151b17e2a/addresses
+Accept: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
+Content-Type: application/json
+
+{
+    "street": "jalan2",
+    "city": "bekasi2",
+    "province": "jawabarat2",
+    "country": "indonesia2",
+    "postalCode": "30272"
+}
+
+### get address
+GET http://localhost:8080/api/contacts/4217cb70-eb41-40ba-8731-cc6151b17e2a/addresses/982c86da-923a-4a63-a97a-3d29478f1bc7
+Accept: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
+
+### list address
+GET http://localhost:8080/api/contacts/4217cb70-eb41-40ba-8731-cc6151b17e2a/addresses
+Accept: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
+
+### update address
+PUT http://localhost:8080/api/contacts/4217cb70-eb41-40ba-8731-cc6151b17e2a/addresses/982c86da-923a-4a63-a97a-3d29478f1bc7
+Accept: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
+Content-Type: application/json
+
+{
+    "street": "jalan baru",
+    "city": "bekasi baru",
+    "province": "jawabarat baru",
+    "country": "indonesia baru",
+    "postalCode": "31111"
+}
+
+### delete address
+DELETE http://localhost:8080/api/contacts/4217cb70-eb41-40ba-8731-cc6151b17e2a/addresses/982c86da-923a-4a63-a97a-3d29478f1bc7
+Accept: application/json
+X-API-TOKEN: f93b6220-d97f-40ca-a257-6d224d823fb7
